@@ -3,6 +3,9 @@
 # see wikipedia https://en.wikipedia.org/wiki/Dijkstra's_algorithm
 
 # consider doing this using dataframes
+# write function
+# build test graphs
+
 
 def dijkstra(graph, start, end):
     """
@@ -19,9 +22,17 @@ def dijkstra(graph, start, end):
 
     # initialize path to empty list (this is will be returned, list of nodes that represents the path through the graph
     #       from start to end)
+    path = []
+
     # initialize visited set of node-prevNode-distance 3-tuples (empty at beginning)
+    visited = []
+
     # initialize current node-prevNode-distance tuple
+    current = (start, False, 0)
+
     # initialize unvisited set of node-prevNode-distance 3-tuples, with distance infinity and prevNode empty
+    unvisited = []
+
     # set distance of start node to 0 in the unvisited node set
 
     # LOOP
@@ -48,6 +59,11 @@ def dijkstra(graph, start, end):
     # reverse path
     # return path
 
-
-
     return
+
+
+class Node:
+    def __init__(self, name, prev_node):
+        self.name = name
+        self.prev_node = prev_node
+
