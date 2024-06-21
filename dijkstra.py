@@ -44,32 +44,19 @@ def dijkstra(graph, start, end):
         # remove nearest in unvisited from unvisited
 
         # iterate over edges to update known distances in unvisited
-        print('current node: ' + current[0])
         for edge in edges:
-            print(' --checking edge: ' + edge.node1 + ' <-> ' + edge.node2)
             for node in unvisited:
                 # if the given edge goes from the current node to the given unvisited node
                 if ((edge.node1 == node[0]) | (edge.node2 == node[0])) & \
                         ((edge.node1 == current[0]) | (edge.node2 == current[0])):
-                    print(' ----this edge connects to ' + node[0])
                     # calculate the distance to the unvisited node by traversing current node and current edge
                     dist = current[2] + edge.weight
                     # if this distance is less than the current known distance to the unvisited node, then
                     # update the unvisited node's distance and prev_node
-                    if (current[0] == 'b') & (node[0] == 'd'):
-                        print('checking edge from D to E')
-                        print('new distance: ' + str(dist))
-                        print('existing distance: ' + str(node[2]))
                     if dist < node[2]:
-                        print('----updating dist to ' + node[0] + ': ' + str(node[2]) + ' -> ' + str(dist))
                         node[2] = dist
                         node[1] = current[0]
-                    else:
-                        print('----did not update dist to ' + node[0])
-                    # remove the edge from edges since it has been applied
                     break
-                else:
-                    print(" ----this edge doesn't connect to " + node[0])
 
         # find the nearest (shortest distance) node in unvisited
         unvisited_min_node = ['', False, float('inf')]
@@ -94,19 +81,11 @@ def dijkstra(graph, start, end):
     # append end (current) to path
     path.append(current)
 
-    print('visited: ' + str(visited))
-    print('current: ' + str(current))
-    print('unvisited: ' + str(unvisited))
-
-    print('path: ' + str(path))
-
     # LOOP
     # trace 'path' from 'visited'
     while True:
-        print('while')
         # get prev_node from last node in 'path'
         prev_node = path[len(path) - 1]
-        print('prev_node: ' + str(prev_node[1]))
         # if the last node in 'path' is the start node, then the path has been completed, so break
         if prev_node[0] == start:
             break
@@ -120,21 +99,18 @@ def dijkstra(graph, start, end):
                     path.append(node)
                     break
 
-    print(str(path))
     # END LOOP
 
     # prepare return values:
     # --get the total distance
     distance = path[0][2]
-    print(str(distance))
     # --reverse path and strip prev_node and distance values
     path2 = []
     for node in path:
         path2.append(node[0])
     path2.reverse()
 
-    return (distance, path2)
-
+    return distance, path2
 
 
 class Edge:
@@ -150,17 +126,39 @@ class Graph:
         self.edges = edges  # this is a list of Edge
 
 
-edgeAB = Edge('a', 'b', 2)
-edgeAC = Edge('a', 'c', 4)
-edgeBC = Edge('b', 'c', 1)
-edgeBD = Edge('b', 'd', 4)
-edgeBE = Edge('b', 'e', 2)
-edgeCE = Edge('c', 'e', 3)
-edgeDE = Edge('d', 'e', 3)
-edgeDF = Edge('d', 'f', 2)
-edgeEF = Edge('e', 'f', 1)
+edge1AB = Edge('a', 'b', 2)
+edge1AC = Edge('a', 'c', 4)
+edge1BC = Edge('b', 'c', 1)
+edge1BD = Edge('b', 'd', 4)
+edge1BE = Edge('b', 'e', 2)
+edge1CE = Edge('c', 'e', 3)
+edge1DE = Edge('d', 'e', 3)
+edge1DF = Edge('d', 'f', 2)
+edge1EF = Edge('e', 'f', 1)
 test_nodes1 = ['a', 'b', 'c', 'd', 'e', 'f']
-test_edges1 = [edgeAB, edgeAC, edgeBC, edgeBD, edgeBE, edgeCE, edgeDE, edgeDF, edgeEF]
+test_edges1 = [edge1AB, edge1AC, edge1BC, edge1BD, edge1BE, edge1CE, edge1DE, edge1DF, edge1EF]
 test_graph1 = Graph(test_nodes1, test_edges1)
 
 print(dijkstra(test_graph1, 'a', 'f'))
+
+
+edge2AB = Edge('a', 'b', 4)
+edge2AC = Edge('a', 'c', 8)
+edge2BC = Edge('b', 'c', 11)
+edge2BD = Edge('b', 'd', 8)
+edge2CE = Edge('c', 'e', 7)
+edge2CF = Edge('c', 'f', 1)
+edge2DE = Edge('d', 'e', 2)
+edge2DG = Edge('d', 'g', 7)
+edge2DH = Edge('d', 'h', 4)
+edge2EF = Edge('e', 'f', 6)
+edge2FH = Edge('f', 'h', 2)
+edge2GH = Edge('g', 'h', 14)
+edge2GI = Edge('g', 'i', 9)
+edge2HI = Edge('h', 'i', 10)
+test_nodes2 = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i']
+test_edges2 = [edge2AB, edge2AC, edge2BC, edge2BD, edge2CE, edge2CF, edge2DE, edge2DG, edge2DH, edge2EF, edge2FH,
+               edge2GH, edge2GI, edge2HI]
+test_graph2 = Graph(test_nodes2, test_edges2)
+
+print(dijkstra(test_graph2, 'a', 'i'))
