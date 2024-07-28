@@ -2,3 +2,4 @@ README
 
 An implementation of Dijkstra's shortest path search algorithm.
 
+This implementation uses bi-directional or un-directed edges. Dijkstra's algorithm also assumes positive edge weights.

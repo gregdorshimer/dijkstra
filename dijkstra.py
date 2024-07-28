@@ -28,6 +28,7 @@ def dijkstra(graph, start, end):
 
     # initialize unvisited list of node-prevNode-distance lists, with distance infinity and prevNode empty
     # excluding the starting node
+    # TODO use a min-heap here
     unvisited = []
     for node in graph.nodes:
         if node != start:
